@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bank Loan Application</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #f8f9fa; padding-top: 50px; padding-bottom: 50px; }
+        .card { box-shadow: 0 4px 8px rgba(0,0,0,0.1); border-radius: 10px; }
+        .result-box { display: none; margin-top: 20px; font-weight: bold; font-size: 1.2rem; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <div class="card p-4">
+                <h2 class="text-center text-primary mb-4">Secure Application for Financial Support</h2>
+                <p class="text-muted text-center">Please fill out your details below. Our system will process your application instantly.</p>
+
+                <form id="loanForm">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Application Date</label>
+                            <input type="date" class="form-control" id="application_date" required>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Age (21 - 65)</label>
+                            <input type="number" class="form-control" id="applicant_age" min="21" max="65" required>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label">Gender</label>
+                            <select class="form-select" id="gender" required>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label">Employment Status</label>
+                            <select class="form-select" id="employment_status" required>
+                                <option value="Salaried">Salaried</option>
+                                <option value="Self-Employed">Self-Employed</option>
+                                <option value="Unemployed">Unemployed</option>
+                                <option value="Business Owner">Business Owner</option>
+                                <option value="Retired">Retired</option>
+                                <option value="Student">Student</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label">Property Ownership</label>
+                            <select class="form-select" id="property_ownership_status" required>
+                                <option value="Owned">Owned</option>
+                                <option value="Rented">Rented</option>
+                                <option value="Jointly Owned">Jointly Owned</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label">Loan Type</label>
+                            <select class="form-select" id="loan_type" required>
+                                <option value="Personal Loan">Personal Loan</option>
+                                <option value="Home Loan">Home Loan</option>
+                                <option value="Education Loan">Education Loan</option>
+                                <option value="Car Loan">Car Loan</option>
+                                <option value="Business Loan">Business Loan</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label">Purpose of Loan</label>
+                            <select class="form-select" id="purpose_of_loan" required>
+                                <option value="Home Renovation">Home Renovation</option>
+                                <option value="Debt Consolidation">Debt Consolidation</option>
+                                <option value="Medical Emergency">Medical Emergency</option>
+                                <option value="Education">Education</option>
+                                <option value="Business Expansion">Business Expansion</option>
+                                <option value="Vehicle Purchase">Vehicle Purchase</option>
+                                <option value="Wedding">Wedding</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label">Loan Tenure (Months)</label>
+                            <select class="form-select" id="loan_tenure_months" required>
+                                <option value="12">12 Months</option>
+                                <option value="24">24 Months</option>
+                                <option value="36">36 Months</option>
+                                <option value="48">48 Months</option>
+                                <option value="60">60 Months</option>
+                                <option value="120">120 Months</option>
+                                <option value="360">360 Months</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label">Monthly Income ($10k - $200k)</label>
+                            <input type="number" class="form-control" id="monthly_income" min="10000" max="200000" required>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label">Loan Amount ($100k - $2m)</label>
+                            <input type="number" class="form-control" id="loan_amount_requested" min="100000" max="2000000" required>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label">Existing EMIs ($0 - $20k)</label>
+                            <input type="number" class="form-control" id="existing_emis_monthly" min="0" max="20000" required>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label">Debt to Income Ratio (0-150)</label>
+                            <input type="number" class="form-control" id="debt_to_income_ratio" min="0" max="150" step="0.1" required>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label">CIBIL Score (400 - 900)</label>
+                            <input type="number" class="form-control" id="cibil_score" min="400" max="900" required>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label">Interest Rate Offered (5% - 20%)</label>
+                            <input type="number" class="form-control" id="interest_rate_offered" min="5.0" max="20.0" step="0.1" required>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label">Number of Dependents (0 - 5)</label>
+                            <input type="number" class="form-control" id="number_of_dependents" min="0" max="5" required>
+                        </div>
+
+                    </div>
+
+                    <div class="mt-4 text-center">
+                        <button type="submit" class="btn btn-primary btn-lg w-50">Submit Application</button>
+                    </div>
+                </form>
+
+                <div id="resultBox" class="alert text-center result-box"></div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Set today's date automatically
+    document.getElementById('application_date').valueAsDate = new Date();
+
+    // Listen for the submit button
+    document.getElementById('loanForm').addEventListener('submit', async function(event) {
+        event.preventDefault();
+
+        // Show loading state
+        const resultBox = document.getElementById('resultBox');
+        resultBox.style.display = 'block';
+        resultBox.className = 'alert alert-info text-center result-box';
+        resultBox.innerText = "Analyzing application...";
+
+        // Gather all the data, ensuring numbers are properly formatted
+        const applicationData = {
+            "application_date": document.getElementById('application_date').value,
+            "loan_amount_requested": parseFloat(document.getElementById('loan_amount_requested').value),
+            "debt_to_income_ratio": parseFloat(document.getElementById('debt_to_income_ratio').value),
+            "gender": document.getElementById('gender').value,
+            "number_of_dependents": parseInt(document.getElementById('number_of_dependents').value),
+            "purpose_of_loan": document.getElementById('purpose_of_loan').value,
+            "interest_rate_offered": parseFloat(document.getElementById('interest_rate_offered').value),
+            "loan_tenure_months": parseInt(document.getElementById('loan_tenure_months').value),
+            "applicant_age": parseInt(document.getElementById('applicant_age').value),
+            "employment_status": document.getElementById('employment_status').value,
+            "existing_emis_monthly": parseFloat(document.getElementById('existing_emis_monthly').value),
+            "loan_type": document.getElementById('loan_type').value,
+            "property_ownership_status": document.getElementById('property_ownership_status').value,
+            "cibil_score": parseInt(document.getElementById('cibil_score').value),
+            "monthly_income": parseFloat(document.getElementById('monthly_income').value)
+        };
+
+        try {
+            // Send the data to your Flask API
+            const response = await fetch('/predict', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(applicationData)
+            });
+
+            const data = await response.json();
+
+            // Display the result
+            if(data.prediction === "Fraud" || data.flagged_for_review === true) {
+                resultBox.className = 'alert alert-danger text-center result-box';
+                resultBox.innerHTML = `⚠️ Application Denied<br><small>Flagged for review.</small>`;
+            } else {
+                resultBox.className = 'alert alert-success text-center result-box';
+                resultBox.innerHTML = `✅ Application Approved<br></small>`;
+            }
+
+        } catch (error) {
+            resultBox.className = 'alert alert-warning text-center result-box';
+            resultBox.innerText = "Error connecting to the bank server.";
+            console.error(error);
+        }
+    });
+</script>
+</body>
+</html>

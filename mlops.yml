@@ -1,0 +1,36 @@
+name: Monthly Fraud Model Retraining
+
+on:
+  #Time Trigger: Run automatically at 00:00 on the 1st of every month
+  schedule:
+    - cron: '0 0 1 * *'
+
+  #Manual Trigger: Click a button in GitHub to force a retrain
+  workflow_dispatch:
+
+jobs:
+  retrain-model:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code Repository
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+
+    - name: Install Dependencies
+      run: |
+        pip install -r requirements.txt
+        pip install mlflow scipy pandas scikit-learn sqlalchemy alembic flask-cors
+
+    - name: Run Batch Preprocessing
+      run: |
+        CURRENT_FILE="api_data_$(date +'%Y_%m').csv"
+        echo "Processing file: $CURRENT_FILE"
+        python batch_preprocess.py $CURRENT_FILE
+
+    - name: Run Data Drift Monitor (Will trigger retrain_pipeline.py if drift is found)
+      run: python drift_monitor.py
